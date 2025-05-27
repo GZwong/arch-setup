@@ -1,0 +1,241 @@
+// -*- mode: jsonc -*-
+// See https://man.archlinux.org/man/waybar.5
+[
+  {
+    "name": "black-bar",
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "exclusive": true, // Whether waybar has exclusive space (no overlap with windows)
+
+    // Choose the order of the modules
+    "modules-left": [
+      "hyprland/workspaces",
+      "hyprland/language",
+      "keyboard-state",
+      "custom/spotify"
+    ],
+    "modules-center": ["hyprland/window"],
+    "modules-right": [
+      "power-profiles-daemon",
+      "network",
+      "custom/notifications",
+      "custom/power",
+      "clock"
+    ],
+    "unused-modules": [
+      "battery#bat2",
+      // "network",
+      "tray", // Any apps running using XEmbed tray protocol
+      "idle_inhibitor",
+      "mpd", // Music Player Daemon
+      "custom/media"
+    ],
+    // Modules configuration
+    "hyprland/window": {
+      "format": "{title}",
+      "format-icons": {
+        "floating": "",
+        "fullscreen": "⛶",
+        "sticky": "",
+        "maximized": "🗖",
+        "minimized": "🗕"
+      },
+      "expand": true,
+      "rewrite": {
+        "(.*) — Mozilla Firefox": "<span color='#FF7139'></span>  $1", // em-dash, not regular dash
+        "(.*) - (.*) - Visual Studio Code": "Code - $1"
+      },
+      "on-click": "hyprctl dispatch window next" // Click to switch to next window
+      // "on-scroll-up": "hyprctl dispatch window next",
+      // "on-scroll-down": "hyprctl dispatch window prev"
+    },
+    "hyprland/workspaces": {
+      "format": "{id}",
+      "on-click": "hyprctl dispatch workspace next", // Click to switch to next workspace
+      "on-scroll-up": "hyprctl dispatch workspace next",
+      "on-scroll-down": "hyprctl dispatch workspace prev"
+    },
+    //   "hyprland/workspaces": {
+    //     "format": "{windows}",
+    //     "window-rewrite-default": "",
+    //     "window-rewrite": {
+    //       "class<firefox>": "",
+    //       "class<Code>": "󰨞",
+    //       "title<.*YouTube.*>": "",
+    //       "class<Firefox> title<.*github.*>": "",
+    //       "class<Alacritty>": "",
+    //       "class<Spotify>": ""
+    //     },
+    //     "on-click": "hyprctl dispatch workspace next" // Click to switch to next workspace
+    //   },
+    "keyboard-state": {
+      "numlock": false,
+      "capslock": true,
+      "format": "{name} {icon} ",
+      "format-icons": {
+        "locked": "",
+        "unlocked": ""
+      },
+      // Setting device path increase responsiveness - no need to search for device
+      "device-path": "/dev/input/event16" // Path to the keyboard device
+    },
+    "idle_inhibitor": {
+      "format": "{icon}",
+      "format-icons": {
+        "activated": "",
+        "deactivated": ""
+      }
+    },
+    "tray": {
+      "icon-size": 21,
+      "spacing": 10
+    },
+    "clock": {
+      // "timezone": "America/New_York",
+      "format": "{:%A, %d %B %Y %H:%M}",
+      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+      "format-alt": "{:%A, %d %B %Y %H:%M}",
+      "calendar": {
+        "format": {
+          // "months": "<span color='#ffead3'><b>{}</b></span>",
+          // "today": "<span color='#ff6699'><b>{}</b></span>"
+        }
+      }
+    },
+    "cpu": {
+      "format": "{usage}% ",
+      "tooltip": false
+    },
+    "memory": {
+      "format": "{}% "
+    },
+    "temperature": {
+      // "thermal-zone": 2,
+      // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+      "critical-threshold": 80,
+      // "format-critical": "{temperatureC}°C {icon}",
+      "format": "{temperatureC}°C {icon}",
+      "format-icons": ["", "", ""]
+    },
+    "backlight": {
+      "device": "intel_backlight", // Stored in /sys/class/backlight/
+      "format": "{percent}% {icon}",
+      "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+    "battery": {
+      "states": {
+        "full": 100,
+        "good": 80,
+        "warning": 30,
+        "critical": 15
+      },
+      "format": "{capacity}% {icon}",
+      "format-full": "{capacity}% {icon}",
+      "format-charging": "{capacity}% ",
+      "format-plugged": "{capacity}% ",
+      "format-good": "", // An empty format will hide the module
+      "format-alt": "{time} {icon}",
+      "format-icons": ["", "", "", "", ""]
+    },
+    "battery#bat2": {
+      "bat": "BAT2"
+    },
+    "power-profiles-daemon": {
+      "format": "{icon}",
+      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+      "tooltip": true,
+      "format-icons": {
+        "default": "",
+        "performance": "",
+        "balanced": "",
+        "power-saver": ""
+      }
+    },
+    "network": {
+      // "interface": "wlp2*", // (Optional) To force the use of this interface
+      "format-wifi": "",
+      "format-ethernet": "",
+      // "format-linked": "{ifname} (No IP) ",
+      "format-linked": "",
+      "format-disconnected": "Disconnected ⚠",
+      // "format-alt": "{ifname}: {ipaddr}/{cidr}"
+      "tooltip-format": "{ifname} via {gwaddr} ",
+      "format-alt": "{essid} ({signalStrength}%)"
+    },
+    "pulseaudio": {
+      "scroll-step": 1, // %, can be a float
+      "format": "{icon}  {volume}%",
+      "format-bluetooth": "{volume}% {icon} {format_source}",
+      "format-bluetooth-muted": " {icon} {format_source}",
+      "format-muted": " {format_source}",
+      "format-source": " {volume}%",
+      "format-source-muted": "",
+      "format-icons": {
+        "headphone": "",
+        "hands-free": "",
+        "headset": "",
+        "phone": "",
+        "portable": "",
+        "car": "",
+        "default": ["", "", ""]
+      },
+      "on-click": "pavucontrol"
+    },
+    "custom/media": {
+      "format": "{icon} {text}",
+      "return-type": "json",
+      "max-length": 40,
+      "format-icons": {
+        "spotify": "",
+        "default": "🎜"
+      },
+      "escape": true,
+      "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+      // "exec": "playerctl metadata --format '{{playerName}} {{title}}' | grep spotify || echo ''" // Use playerctl to get Spotify metadata
+      // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+    },
+    "custom/spotify": {
+      "format": "{}  ",
+      "tooltip": true,
+      "tooltip-format": "{}",
+      "max-length": 40,
+      "return-type": "json",
+      // Media player script to get Spotify metadata (ran in a loop to update) -
+      // require python-gobject library
+      "exec": "/usr/bin/python3 ~/.config/waybar/scripts/mediaplayer.py --player spotify",
+      // Custom command to get Spotify metadata but does not update when spotify opens/closes
+      // "exec": "playerctl metadata --format '{{artist}} - {{title}}' --player=spotify 2>/dev/null",
+      "on-click": "playerctl play-pause --player=spotify",
+      "on-scroll-up": "playerctl next --player=spotify",
+      "on-scroll-down": "playerctl previous --player=spotify"
+    },
+    "custom/notifications": {
+      "exec": "swaync-client -swb",
+      "on-click": "swaync-client -t",
+      "tooltip": false,
+      "return-type": "json",
+      "format": "🔔 {}"
+    },
+    "custom/power": {
+      "format": "⏻",
+      "tooltip": false,
+      "menu": "on-click",
+      "menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
+      "menu-actions": {
+        "shutdown": "systemctl poweroff",
+        "reboot": "systemctl reboot",
+        "suspend": "systemctl suspend",
+        "hibernate": "systemctl hibernate"
+      }
+    }
+  }
+  // {
+  //   "id": 2,
+  //   "name": "black-bar",
+  //   "layer": "top",
+  //   "position": "bottom",
+  //   "exclusive": true,
+
+  //   "modules-left": ["clock"]
+  // }
+]

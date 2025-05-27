@@ -1,0 +1,179 @@
+;; Path to specific eww config
+(defvar eww "$HOME/.local/bin/eww -c $HOME/.config/eww/sidebar")
+
+; Define Polling Variables for CPU usage, temps and other resources
+; which runs a provided shell script repeatedly
+(defpoll time 
+            :interval "1s"
+            :initial "initial-value"
+            :run-while "time-visible"
+        `date +%H:%M:%S`) ; Command to run
+
+; Define listening variables that listen to an output of a shell script
+(deflisten brightness
+            :initial "0"
+        `tail -F file`)  ; Command to run - `tail` prints the last n line of file to standard output, -F argument keeps retrying
+
+
+; Literal for dynamically generated widgets
+; Then, inside your widget, use:
+(defvar color "red")
+
+
+; (defwindow example
+;            :monitor 0
+;            :geometry (geometry :x "0%"
+;                                :y "20px"
+;                                :width "90%"
+;                                :height "30px"
+;                                :anchor "top center")
+;            :stacking "fg"
+;            :reserve (struts :distance "40px" :side "top")
+;            :windowtype "dock"
+;            :wm-ignore false
+;     "example content"
+;     (greeter :text "Say hello!"
+;              :name "Tim"))
+
+(defwidget greeter [?text name]
+    (box :orientation "horizontal"
+            :halign "center"
+        text
+        (button :onclick "notify-send 'Hello' 'Hello, ${name}'"
+        "Greet")))
+
+;; Workspaces Widgets ;;
+(defwidget workspaces []
+	(literal :content workspace))
+(deflisten workspace "scripts/workspace")
+
+
+;; Wifi Widgets ;;
+(defwidget wifi-box []
+	(eventbox   :orientation "v"  
+				:tooltip wifi-name
+	(button		:onclick "scripts/popup wifi" 
+				:class "wifi-icon" 
+                wifi-icon)))
+(defpoll wifi-icon :interval "1s" "source scripts/wifi icon")
+(defpoll wifi-name :interval "1s" "source scripts/wifi name")
+
+;; Volume Widgets ;;
+(defwidget volume-box []
+	(eventbox :onhover "${eww} update show-volume=true" 		
+			  :onhoverlost "${eww} update show-volume=false"
+	(box      :orientation "v" 	  
+			  :space-evenly "false" 
+			  :spacing "2"
+	(revealer :transition "slideup" 
+			  :reveal show-volume   
+			  :duration "550ms"
+	(scale    :class "vol-bar" 	  
+			  :value current-volume 
+			  :orientation "v"      
+			  :flipped true 
+			  :tooltip "Volume: ${current-volume}%" 
+			  :max 101 
+			  :min 0 
+			  :onchange "amixer sset Master {}%" ))
+	(button   :class "volume-icon"
+              :onclick "scripts/popup audio"   
+              "🔊"))))
+(defpoll current-volume :interval ".2s" "amixer sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defvar show-volume false)
+
+;; Brightness Widgets ;;
+(defwidget brightness-box []
+    (eventbox :onhover "${eww} update show-brightness=true"   
+              :onhoverlost "${eww} update show-brightness=false"
+              (box    :orientation "v"  
+                      :space-evenly "false"  
+                      :spacing 2
+              (revealer :transition "slideup" 
+                        :reveal show-brightness  
+                        :duration "550ms"
+              (scale :class "bribar" 
+                     :value current-brightness 
+                     :tooltip "Brightness: ${current-brightness}%" 
+                     :onchange "brightnessctl set {}%" 
+                     :orientation "v" 
+                     :flipped true 
+                     :max 101 
+                     :min 0))
+              (label :class "brightness-icon" 
+                     :text "🔆"))))
+  (defpoll current-brightness :interval ".2s" "brightnessctl | awk -F '[()]' '{print $2}' | tr -d '%'")
+  (defvar show-brightness false)
+
+;; Control Panel Widgets ;;	
+(defwidget control-panel []
+	(box :orientation "v" 
+		 :space-evenly true
+		 :class "control"
+        ;  (bat)
+        ;  (wifi)
+         (volume-box)
+         (brightness-box)
+         (wifi-box)
+    )
+)
+
+;; Powermenu Widgets ;;
+(defwidget power []
+	(eventbox	:onhover "${eww} update power=true"	
+				:onhoverlost "${eww} update power=false" 
+	(box		:orientation "v"					
+				:space-evenly "false" 	 
+				:vexpand "false" 	
+				:class "powermenu"
+	(revealer	:transition "slideup"				
+				:reveal power			 
+				:duration "550ms"
+	(box		:orientation "v"					
+				:space-evenly "false"
+            (button   	:class "button-bspres"  			
+                        :tooltip "BSPWM Restart" 
+                        :onclick "bspc wm -r" "A" )
+
+            (button		:class "button-reb"					
+                        :tooltip "Reboot"		 
+                        :onclick "reboot"	"B")
+
+            (button		:class "button-quit" 				
+                        :tooltip "Logout" 		 
+                        :onclick "killall bspwm" "C")
+
+            (button		:class "button-lock" 				
+                        :tooltip "Lock Screen"	 
+                        :onclick "betterlockscreen -l"	"D")))
+        (button		:class "button-off"					
+                    :tooltip "Shutdown"		 
+                    :onclick "shutdown now"	""))))
+(defvar power false)
+
+(defwidget bottom-widgets []
+	(box	:orientation "v" 
+			:space-evenly false
+(control-panel)
+(power)))
+
+; MAIN WINDOW SIDEBAR
+(defwindow sidebar
+    :monitor 0
+    :geometry (geometry :x "0%"
+                        :y "0%"
+                        :width "50px"
+                        :height "100%"
+                        :anchor "left center")
+    :stacking "overlay"
+    :exclusive true  ;  Only applicable if anchor is "center"
+    :focusable false
+    :namespace "info"
+    (box    :class "eww_bar"
+            :orientation "v"
+            :vexpand "false"
+            :hexpand "false"
+            (workspaces)
+            (bottom-widgets)
+    )
+)

@@ -1,0 +1,43 @@
+#!/bin/bash
+
+workspaces() {
+  ws1=1
+  ws2=2
+  ws3=3
+  ws4=4
+  ws5=5
+  ws6=6
+
+  # Get the current workspace status using hyprctl
+  workspace_info=$(hyprctl workspaces)
+
+  # Check if Workspaces are Occupied
+  o1=$(echo "$workspace_info" | grep "workspace ID $ws1" | grep -o "windows: [1-9][0-9]*" | awk '{print $2}')
+  o2=$(echo "$workspace_info" | grep "workspace ID $ws2" | grep -o "windows: [1-9][0-9]*" | awk '{print $2}')
+  o3=$(echo "$workspace_info" | grep "workspace ID $ws3" | grep -o "windows: [1-9][0-9]*" | awk '{print $2}')
+  o4=$(echo "$workspace_info" | grep "workspace ID $ws4" | grep -o "windows: [1-9][0-9]*" | awk '{print $2}')
+  o5=$(echo "$workspace_info" | grep "workspace ID $ws5" | grep -o "windows: [1-9][0-9]*" | awk '{print $2}')
+  o6=$(echo "$workspace_info" | grep "workspace ID $ws6" | grep -o "windows: [1-9][0-9]*" | awk '{print $2}')
+
+  # Check if Workspaces are Focused
+  f1=$(echo "$workspace_info" | grep "workspace ID $ws1" | grep -o "monitorID: 0" && echo "focused" || echo "")
+  f2=$(echo "$workspace_info" | grep "workspace ID $ws2" | grep -o "monitorID: 0" && echo "focused" || echo "")
+  f3=$(echo "$workspace_info" | grep "workspace ID $ws3" | grep -o "monitorID: 0" && echo "focused" || echo "")
+  f4=$(echo "$workspace_info" | grep "workspace ID $ws4" | grep -o "monitorID: 0" && echo "focused" || echo "")
+  f5=$(echo "$workspace_info" | grep "workspace ID $ws5" | grep -o "monitorID: 0" && echo "focused" || echo "")
+  f6=$(echo "$workspace_info" | grep "workspace ID $ws6" | grep -o "monitorID: 0" && echo "focused" || echo "")
+
+  # Generate output for EWW
+  echo "(box :class \"works\" :orientation \"v\" :halign \"center\" :valign \"start\" :space-evenly \"false\" :spacing \"-5\" \
+    (button :onclick \"hyprctl dispatch workspace $ws1\" :class \"$o1$f1\" \"\") \
+    (button :onclick \"hyprctl dispatch workspace $ws2\" :class \"$o2$f2\" \"\") \
+    (button :onclick \"hyprctl dispatch workspace $ws3\" :class \"$o3$f3\" \"\") \
+    (button :onclick \"hyprctl dispatch workspace $ws4\" :class \"$o4$f4\" \"\") \
+    (button :onclick \"hyprctl dispatch workspace $ws5\" :class \"$o5$f5\" \"\") \
+    (button :onclick \"hyprctl dispatch workspace $ws6\" :class \"$o6$f6\" \"\"))"
+}
+
+workspaces
+hyprctl events | while read -r _ ; do
+  workspaces
+done

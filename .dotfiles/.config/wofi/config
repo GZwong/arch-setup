@@ -1,0 +1,11 @@
+# General behavior
+show=drun
+prompt=Run:
+columns=1
+allow_images=true
+insensitive=true
+term=foot
+width=500
+height=400
+location=center
+always_parse_args=true

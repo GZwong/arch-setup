@@ -1,0 +1,126 @@
+// Variable Color's
+$background: rgba(0, 0, 0, 0.5);
+// $background: black;
+$foreground: #A9B1D6;
+
+$black: #24283B;
+$gray: #565F89;
+$red: #F7768E;
+$green: #73DACA;
+$yellow: #E0AF68;
+$blue: #7AA2F7;
+$magenta: #BB9AF7;
+$cyan: #7DCFFF;
+$white: $foreground;
+
+* {
+    font-family: system-ui;
+}
+
+// Volume 
+.volume-popup {
+    background-color: transparent;
+}
+
+.vol-revealer {
+    border: 1px solid transparent;
+    border-radius: 10px;
+}
+
+.vol-box {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 0 10px 0 20px;
+    background-color: $background;
+}
+
+.vol-bar {
+    border: 1px solid transparent;
+    border-radius: 10px;
+}
+
+.vol-icon {
+    all: unset;  /* Neccessary to remove bg-color */
+    font-family: "Adawaita Sans";
+    margin: .5rem 0 .5rem 0;
+    color: $red;
+}
+
+.vol-bar trough {
+    border: 1px solid $red;
+}
+
+
+.vol-bar highlight {
+    all: unset;
+    background-color: $red;
+}
+
+.vol-text {
+    all: unset;
+    color: $red;
+}
+
+// Brightness
+.brightness-popup {
+    background-color: transparent;
+}
+
+.bright-revealer {
+    border: 1px solid transparent;
+    border-radius: 10px;
+}
+
+.bright-box {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 0 10px 0 20px;
+    background-color: $background;
+}
+
+.bright-bar {
+    border: 1px solid transparent;
+    border-radius: 10px;
+}
+
+.bright-icon {
+    all: unset;  /* Neccessary to remove bg-color */
+    font-family: "Adawaita Sans";
+    margin: .5rem 0 .5rem 0;
+    color: $yellow;
+}
+
+.bright-bar trough {
+    border: 1px solid $yellow;
+}
+
+
+.bright-bar highlight {
+    all: unset;
+    background-color: $yellow;
+}
+
+.bright-text {
+    all: unset;
+    color: $yellow;
+}
+
+/* For all scales - Remove the slider circle 
+   and background for minimalism */
+scale slider {
+    all: unset;
+    border-radius: 1px 10px;
+}
+
+scale trough {
+    all: unset;
+    // background-color: $background;
+    border-radius: 5px;
+    min-height: 5px;
+    min-width: 100px;
+    margin: .3rem 0 .3rem 0;
+}
+
+scale highlight {
+    border-radius: 0 0 5px 5px; // Make top flat
+}

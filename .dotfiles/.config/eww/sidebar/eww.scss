@@ -1,0 +1,97 @@
+// Variable Color's
+$background: #1A1B26;
+$foreground: #A9B1D6;
+
+$black: #24283B;
+$gray: #565F89;
+$red: #F7768E;
+$green: #73DACA;
+$yellow: #E0AF68;
+$blue: #7AA2F7;
+$magenta: #BB9AF7;
+$cyan: #7DCFFF;
+$white: $foreground;
+
+* {
+    font-family: system-ui;
+}  
+
+// Workspaces
+
+
+.sidebar {
+    background-color: $background;
+}
+
+
+// CONTROL PANEL ----------
+.control {
+    background-color: $gray;
+    margin: 20px 0;
+}
+
+.wifi-icon{
+    all: unset;
+    margin: .5rem 0 .5rem 0;
+    color: $magenta;
+}
+
+.volume-icon {
+    all: unset;  /* Neccessary to remove bg-color */
+    margin: .5rem 0 .5rem 0;
+    color: $green;
+}
+
+.vol-bar trough {
+    border: 1px solid $green;
+}
+
+
+.vol-bar highlight {
+    all: unset;
+    background-color: $green;
+}
+ 
+.brightness-icon {
+    margin: .5rem 0 .5rem 0;
+    color: $yellow;
+}
+
+.bribar trough {
+    border: 1px solid $yellow;
+}
+
+.bribar highlight {
+    all: unset;
+    background-color: $yellow;
+}
+
+/* For all scales - Remove the slider circle 
+   and background for minimalism */
+scale slider {
+    all: unset;
+    border-radius: 1px 10px;
+}
+
+scale trough {
+    all: unset;
+    background-color: $background;
+    border-radius: 5px;
+    min-height: 80px;
+    min-width: 10px;
+    margin: .3rem 0 .3rem 0;
+}
+
+scale highlight {
+    border-radius: 0 0 5px 5px; // Make top flat
+}
+
+// Power buttons
+.button-bspres, 
+.button-reb, 
+.button-lock,
+.button-quit, .button-off{
+    all: unset;
+    padding: .5rem .2rem .3rem .2rem;
+    color: $red;
+}

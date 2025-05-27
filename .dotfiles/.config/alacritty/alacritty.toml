@@ -1,0 +1,6 @@
+# See https://alacritty.org/config-alacritty.html
+[font]
+size = 10.0
+
+[font.normal]
+family = "JetBrainsMono NF"

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+symbol() {
+[ $(cat /sys/class/net/w*/operstate) = down ] && echo N && exit
+echo B
+}
+
+name() {
+nmcli -t -f DEVICE,TYPE,STATE,CONNECTION device | awk -F':' '$2 == "wifi" && $3 == "connected" { print $4 }'
+}
+
+[ "$1" = "icon" ] && symbol && exit
+[ "$1" = "name" ] && name && exit

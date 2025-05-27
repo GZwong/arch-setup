@@ -1,0 +1,69 @@
+(defwindow volume-popup
+    :monitor 0
+    :geometry (geometry :x "50%"
+                        :y "90%"
+                        :width "120px"
+                        :height "40px"
+                        :anchor "top center")
+    :stacking "overlay"
+    :exclusive false
+	(revealer   :reveal volume-changed
+		(box	:class "vol-box"
+				:orientation "h" 	  
+				:space-evenly "false" 
+				:spacing "2"
+				:transition "slideup"
+			(label  :class vol-icon
+					:text "🔊" 
+					:class "vol-text")
+			(scale	:class "vol-bar" 	  
+					:value current-volume 
+					:orientation "h"      
+					:flipped false
+					:tooltip "Volume: ${current-volume}%" 
+					:max 101 
+					:min 0 
+					:onchange "amixer sset Master {}%" )
+			(label  :text "${current-volume}%" 
+					:class "vol-text")
+		)
+	)
+
+)
+(defpoll current-volume :interval ".2s" "amixer sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defvar volume-changed false)
+
+
+(defwindow brightness-popup
+	:monitor 0
+	:geometry (geometry :x "50%"
+						:y "90%"
+						:width "120px"
+						:height "40px"
+						:anchor "top center")
+	:stacking "overlay"
+	:exclusive false
+	(revealer   :reveal brightness-changed
+		(box	:class "bright-box"
+				:orientation "h" 	  
+				:space-evenly "false" 
+				:spacing "2"
+				:transition "slideup"
+			(label  :class bright-icon
+					:text "🔆" 
+					:class "bright-text")
+			(scale	:class "bright-bar" 	  
+					:value current-brightness 
+					:orientation "h"      
+					:flipped false
+					:tooltip "brightness: ${current-brightness}%" 
+					:max 101 
+					:min 0 
+					:onchange "brightnessctl set {}%" )
+			(label  :text "${current-brightness}%" 
+					:class "bright-text")
+		)
+	)
+)
+(defpoll current-brightness :interval "0.2s" "max=$(brightnessctl max); current=$(brightnessctl get); echo $(( 100 * current / max ))")
+(defvar brightness-changed false)
