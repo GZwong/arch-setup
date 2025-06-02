@@ -103,7 +103,7 @@ button:hover {
 #language {
   padding-left: 16px;
   padding-right: 8px;
-  border-radius: 10px 0px 0px 10px;
+  border-radius: 12px 0px 0px 12px;
   transition: none;
   color: #ffffff;
   background: @module-bg-color;
@@ -112,7 +112,7 @@ button:hover {
 #keyboard-state {
   margin-right: 8px;
   padding-right: 0px;
-  border-radius: 0px 10px 10px 0px;
+  border-radius: 0px 12px 12px 0px;
   transition: none;
   color: #ffffff;
   background: @module-bg-color;
@@ -127,7 +127,7 @@ button:hover {
   color: white;
   font-size: 18px;
   background-color: @module-bg-color;
-  border-radius: 10px 0 0 10px;
+  border-radius: 12px 0 0 12px;
   padding: 0px 8px 0px 8px;
 }
 
@@ -140,7 +140,7 @@ button:hover {
   padding-left: 16px;
   padding-right: 16px;
   margin-right: 10px;
-  border-radius: 0px 10px 10px 0px;
+  border-radius: 0px 12px 12px 0px;
   transition: none;
   color: white;
   background: @module-bg-color;
@@ -154,7 +154,7 @@ button:hover {
   margin-right: 8px;
   padding-left: 16px;
   padding-right: 16px;
-  border-radius: 10px;
+  border-radius: 12px;
   transition: none;
   color: #ffffff;
   background: @module-bg-color;
@@ -177,7 +177,7 @@ button:hover {
 #power-profiles-daemon {
   padding: 0px 15px;
   background: @module-bg-color;
-  border-radius: 16px 0 0 16px;
+  border-radius: 12px 0 0 12px;
 }
 
 #power-profiles-daemon.performance {
@@ -211,7 +211,7 @@ button:hover {
 #temperature {
   color: #f0932b;
   padding: 0 16px 0 8px;
-  border-radius: 0 16px 16px 0;
+  border-radius: 0 12px 12px 0;
   background-color: @module-bg-color;
   margin-right: 5px;
 }
@@ -224,7 +224,7 @@ button:hover {
   margin-right: 5px;
   padding-left: 16px;
   padding-right: 16px;
-  border-radius: 10px;
+  border-radius: 12px;
   transition: none;
   color: #ffffff;
   background: @module-bg-color;
@@ -247,7 +247,7 @@ button:hover {
   padding: 0px 15px 0 15px; /* Network symbol skews right */
   background-color: @module-bg-color;
   color: white;
-  border-radius: 16px;
+  border-radius: 12px;
 }
 
 #network.disconnected {
@@ -255,27 +255,29 @@ button:hover {
 }
 
 #battery {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: @module-bg-color;
+  color: white;
+  padding: 0px 15px;
+  border-radius: 12px;
 }
 
 #battery.charging,
 #battery.plugged {
-  color: #ffffff;
-  background-color: #26a65b;
+  background-color: @module-bg-color;
+  color: #26a65b;
 }
 
 @keyframes blink {
   to {
-    background-color: #ffffff;
-    color: #000000;
+    /* background-color: #ffffff; */
+    color: white;
   }
 }
 
 /* Using steps() instead of linear as a timing function to limit cpu usage */
 #battery.critical:not(.charging) {
-  background-color: #f53c3c;
-  color: #ffffff;
+  color: #f53c3c;
+  /* color: #ffffff; */
   animation-name: blink;
   animation-duration: 0.5s;
   animation-timing-function: steps(12);
