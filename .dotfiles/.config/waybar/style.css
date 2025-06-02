@@ -73,11 +73,13 @@ button:hover {
 }
 
 #workspaces button.persistent {
+  border-radius: inherit;
   color: #7c818c;
   font-size: 12px;
 }
 
 #workspaces button.focused {
+  border-radius: inherit;
   color: white;
 }
 
@@ -87,7 +89,9 @@ button:hover {
 }
 
 #workspaces button.urgent {
-  background-color: red;
+  border-radius: inherit;
+  background-color: rgb(153, 11, 11);
+  color: white;
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
