@@ -143,7 +143,7 @@
       "format-full": "{capacity}% {icon}",
       "format-charging": "{capacity}% ",
       "format-plugged": "{capacity}% ",
-      "format-good": "", // An empty format will hide the module
+      // "format-good": "", // An empty format will hide the module
       "format-alt": "{time} {icon}",
       "format-icons": ["", "", "", "", ""]
     },
