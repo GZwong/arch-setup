@@ -1,0 +1,14 @@
+[Unit]
+Description=Sync OneDrive to local folder via rclone
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rclone sync onedrive: /home/gaizhe/OneDrive \
+    --log-file=/home/gaizhe/.cache/rclone/onedrive-sync.log \
+    --log-level=INFO
+Environment=RCLONE_CONFIG=/home/gaizhe/.config/rclone/rclone.conf
+
+[Install]
+WantedBy=default.target
