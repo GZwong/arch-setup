@@ -122,3 +122,46 @@ scale trough {
 scale highlight {
   border-radius: 0 0 5px 5px; // Make top flat
 }
+
+// Temperature
+.temperature-popup {
+  background-color: transparent;
+}
+
+.temperature-revealer {
+  border: 1px solid transparent;
+  border-radius: 10px;
+}
+
+.temperature-box {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 0 10px 0 20px;
+  background-color: $background;
+}
+
+.temperature-bar {
+  border: 1px solid transparent;
+  border-radius: 10px;
+}
+
+.night-icon {
+  all: unset; /* Neccessary to remove bg-color */
+  font-family: "Adawaita Sans";
+  margin: 0.5rem 0 0.5rem 0;
+  color: $blue;
+}
+
+.temperature-bar trough {
+  border: 1px solid $blue;
+}
+
+.temperature-bar highlight {
+  all: unset;
+  background-color: $blue;
+}
+
+.temperature-text {
+  all: unset;
+  color: $blue;
+}

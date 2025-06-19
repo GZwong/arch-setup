@@ -1,7 +1,7 @@
 (defwindow volume-popup
     :monitor 0
     :geometry (geometry :x "50%"
-                        :y "85%"
+                        :y "90%"
                         :width "120px"
                         :height "40px"
                         :anchor "top center")
@@ -37,7 +37,7 @@
 (defwindow brightness-popup
 	:monitor 0
 	:geometry (geometry :x "50%"
-						:y "85%"
+						:y "90%"
 						:width "120px"
 						:height "40px"
 						:anchor "top center")
@@ -67,3 +67,39 @@
 )
 (defpoll current-brightness :interval "0.2s" "max=$(brightnessctl max); current=$(brightnessctl get); echo $(( 100 * current / max ))")
 (defvar brightness-changed false)
+
+
+(defwindow temperature-popup
+	:monitor 0
+	:geometry (geometry :x "50%"
+						:y "90%"
+						:width "120px"
+						:height "40px"
+						:anchor "top center")
+	:stacking "overlay"
+	:exclusive false
+	(revealer   :reveal temperature-changed
+				:transition "crossfade"
+		(box	:class "temperature-box"
+				:orientation "h" 	  
+				:space-evenly "false" 
+				:spacing "2"
+			(image  :path "./assets/blue-moon.png"
+					:image-width 18)
+			; (label  :class "night-icon"
+			; 		:text "🌙" 
+			; 		:class "temperature-text")
+			(scale	:class "temperature-bar" 	  
+					:value current-temperature
+					:orientation "h"      
+					:flipped false
+					:max 10000 
+					:min 0 
+					:onchange "hyprctl hyprsunset temperature {}")
+			(label  :text "${current-temperature}" 
+					:class "temperature-text")
+		)
+	)
+)
+(defpoll current-temperature :interval "0.2s" "hyprctl hyprsunset temperature")
+(defvar temperature-changed false)
