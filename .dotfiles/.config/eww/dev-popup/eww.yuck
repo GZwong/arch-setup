@@ -1,18 +1,18 @@
 (defwindow volume-popup
     :monitor 0
     :geometry (geometry :x "50%"
-                        :y "90%"
+                        :y "85%"
                         :width "120px"
                         :height "40px"
                         :anchor "top center")
     :stacking "overlay"
     :exclusive false
 	(revealer   :reveal volume-changed
+				:transition "crossfade"
 		(box	:class "vol-box"
 				:orientation "h" 	  
 				:space-evenly "false" 
 				:spacing "2"
-				:transition "slideup"
 			(label  :class vol-icon
 					:text "🔊" 
 					:class "vol-text")
@@ -30,25 +30,25 @@
 	)
 
 )
-(defpoll current-volume :interval ".2s" "amixer sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defpoll current-volume :interval ".2s" "amixer sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%' | grep -Eo '[0-9]+' || echo 0")
 (defvar volume-changed false)
 
 
 (defwindow brightness-popup
 	:monitor 0
 	:geometry (geometry :x "50%"
-						:y "90%"
+						:y "85%"
 						:width "120px"
 						:height "40px"
 						:anchor "top center")
 	:stacking "overlay"
 	:exclusive false
 	(revealer   :reveal brightness-changed
+				:transition "crossfade"
 		(box	:class "bright-box"
 				:orientation "h" 	  
 				:space-evenly "false" 
 				:spacing "2"
-				:transition "slideup"
 			(label  :class bright-icon
 					:text "🔆" 
 					:class "bright-text")
