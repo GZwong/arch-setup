@@ -8,6 +8,7 @@ This setup has the following stack:
 - Waybar - Status bar
 - thunar - minimalistic file manager
 - alacritty - terminal to be used in hyprland
+- zsh - An alternative of the default `bash` shell offering advanced features, customizations and community support.
 
 # Functionalities
 
@@ -495,6 +496,7 @@ Installing a speech synthesizer
 Check hyprland ecosystem: https://wiki.hyprland.org/Hypr-Ecosystem/
 
 - Hyprpaper - wallpaper utility for hyprland
+- Hyprpicker - amazing color picker for `wlroots` compositors
 - Eww - create custom widgets. See [official documentation](https://elkowar.github.io/eww/eww.html)
   for installation details, see community examples for implementation details.
 
@@ -527,3 +529,21 @@ Check hyprland ecosystem: https://wiki.hyprland.org/Hypr-Ecosystem/
     ./eww daemon  # Start the eww daemon
     ./eww open <window_name>  # Open a window
     ```
+
+- `zsh` and `oh-my-zsh`
+
+  - `zsh` is an alternative shell for `bash`.
+
+  - To download: `sudo pacman -S zsh zsh-completions`
+
+  - Change `zsh` to the default shell: `chsh -s /bin/zsh`
+
+  - Install `oh-my-zsh`, a framework for managing `zsh` configuration:
+
+    ```
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    ```
+
+  - Used the popular powerlevel-10k zsh configuration. See the [configuration file](.dotfiles/.zshrc).
+
+- `kanshi` - Used to set up default display profiles (e.g. setup a home profile whenever laptop is connected to external display to only use external display)

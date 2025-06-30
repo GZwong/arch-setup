@@ -1,0 +1,9 @@
+profile home {
+	output eDP-1 {
+		disable
+	}
+	
+	output "HKC OVERSEAS LIMITED 27E3Q 0000000000001" {
+		mode 2560x1440@165.01Hz
+	}
+}
