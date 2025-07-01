@@ -5,7 +5,7 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/rclone sync onedrive: /home/gaizhe/OneDrive \
+ExecStart=/usr/bin/rclone bisync /home/gaizhe/OneDrive onedrive: \
     --log-file=/home/gaizhe/.cache/rclone/onedrive-sync.log \
     --log-level=INFO
 Environment=RCLONE_CONFIG=/home/gaizhe/.config/rclone/rclone.conf

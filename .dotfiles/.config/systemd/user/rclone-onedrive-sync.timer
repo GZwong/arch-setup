@@ -1,8 +1,9 @@
 [Unit]
-Description=Run rclone-onedrive-sync.service every hour
+Description=Run rclone bisync every 10 minutes starting from boot
 
 [Timer]
-OnCalendar=hourly
+OnBootSec=0
+OnUnitActiveSec=10min
 Persistent=true
 
 [Install]
