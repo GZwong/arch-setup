@@ -29,8 +29,8 @@ To perform this mount during startup, a `systemd` service can be used.
 
 ## 2. Sync
 
-The **sync** mode is the one I use where it syncs the remote directory to a
-local directory.
+The **sync** mode is the one I use where it syncs a source directory to a
+destination directory. (The destination will be forced to match the source)
 
 To sync a remote named `onedrive` to a local directory at `~/OneDrive`:
 
@@ -48,8 +48,48 @@ command:
 rclone sync ~/OneDrive onedrive:
 ```
 
-To sync during startup, use a user-level `systemd` service and timer. These
-are available in `.config/systemd/user`.
+To sync during startup, use a user-level `systemd` service and timer.
+
+**Service:**
+
+```bash
+# ~/.config/systemd/user/rclone-onedrive-sync.service
+#!/bin/bash
+
+[Unit]
+Description=Sync OneDrive to local folder via rclone
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rclone bisync /home/gaizhe/OneDrive onedrive: \
+    --log-file=/home/gaizhe/.cache/rclone/onedrive-sync.log \
+    --log-level=INFO
+Environment=RCLONE_CONFIG=/home/gaizhe/.config/rclone/rclone.conf
+
+[Install]
+WantedBy=default.target
+```
+
+**Timer:** (Read from remote every hour)
+
+```bash
+[Unit]
+Description=Run rclone sync every hour
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+
+Note:
+
+- `OnCalendar=hourly` means the service will be run everytime the clock hits 00
+- `Persistent` tells systemd to catch up on missed job when the system was off or sleeping when the timer was scheduled.
 
 To enable them:
 
@@ -62,4 +102,13 @@ systemctl --user enable rclone-onedrive-sync.service
 systemctl --user enable rclone-onedrive-sync-timer
 ```
 
-For more advanced usage, use `bisync`.
+## 3. Bisync
+
+_Note: The `rclone bisync` command is still in BETA and should not be used in production._
+
+`rclone bisync` allows bi-directional sync, where the source of truth is maintained based on the latest modification time by defauly.
+
+The current setup uses `bisync` instead of `sync`. These are available in [`.config/systemd/user`](.dotfiles/.config/systemd/).
+
+A desktop entry for `bisync` has also been implemented [here](.dotfiles/.local/share/applications/rclone-bisync.desktop). This desktop entry can be called in `wofi` or equivalent app
+launchers to manually sync for changes.
