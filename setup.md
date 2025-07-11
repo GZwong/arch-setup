@@ -547,3 +547,5 @@ Check hyprland ecosystem: https://wiki.hyprland.org/Hypr-Ecosystem/
   - Used the popular powerlevel-10k zsh configuration. See the [configuration file](.dotfiles/.zshrc).
 
 - `kanshi` - Used to set up default display profiles (e.g. setup a home profile whenever laptop is connected to external display to only use external display). The configuration file is located [here](.dotfiles/.config/kanshi/config).
+
+- `hyprexpo` - Plugin that enables a view of all workspaces, similar to Mac OS Mission Control.
