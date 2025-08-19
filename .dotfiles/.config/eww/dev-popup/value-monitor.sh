@@ -69,13 +69,25 @@ monitor_temperature() {
     done
 }
 
+# Read volume function
+read_current_volume() {
+
+    # 1. Use pulse audio to get the default speaker volume (pactl)
+    # 2. Use `awk`` to get the print the fifth field of the first line (NR == 1), which is the volume percentage (e.g. 15%)
+    # 3. Use `tr` to delete the percentage character
+    local current_volume=$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | awk 'NR == 1 {print $5}' | tr -d '%')
+
+    # Output
+    echo "$current_volume"
+}
+
 # Volume monitor function
 monitor_volume() {
-    local last_volume=""
+    local last_volume=$(read_current_volume)
     
     while true; do
-        local current_volume=$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | awk '{print $5}' | tr -d '%')
-        
+        local current_volume=$(read_current_volume)
+
         if [[ -n "$current_volume" && "$current_volume" != "$last_volume" ]]; then
             show_popup "volume"
             last_volume="$current_volume"
