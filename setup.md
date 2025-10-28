@@ -226,6 +226,13 @@ bindl = , switch:off:<switch name>, exec, hyprctl keyword monitor "eDP-1, prefer
 
 <br>
 
+## Battery Care
+
+To conserve battery health, it is a good idea to conserve the battery between 20% to 80%.
+We can use the `tlp` application for this.
+
+`tlp` is not solely an application for battery care, but also:
+
 # Applications
 
 Arch is a minimal Linux distro. Here are some important applications and
@@ -549,3 +556,11 @@ Check hyprland ecosystem: https://wiki.hyprland.org/Hypr-Ecosystem/
 - `kanshi` - Used to set up default display profiles (e.g. setup a home profile whenever laptop is connected to external display to only use external display). The configuration file is located [here](.dotfiles/.config/kanshi/config).
 
 - `hyprexpo` - Plugin that enables a view of all workspaces, similar to Mac OS Mission Control.
+
+# To Dos
+
+Let's use EWW as the central widget system
+Let's use kanshi as the central monitor management system
+
+1. Create a monitor management GUI around kanshi. Sends notification whenever profile changes.
+2. Have eww listen to changes in profile and relaunch widgets accordingly.
