@@ -11,11 +11,18 @@
     "exclusive": true, // Whether waybar has exclusive space (no overlap with windows)
 
     // Choose the order of the modules
-    "modules-left": ["custom/power", "clock", "custom/spotify"],
+    "modules-left": [
+      "custom/power",
+      "clock",
+      "hyprland/language",
+      "keyboard-state",
+      "custom/spotify"
+    ],
     "modules-center": ["hyprland/workspaces"],
     "modules-right": [
       "pulseaudio",
       "backlight",
+      // "power-profiles-daemon",
       "cpu",
       "memory",
       "temperature",
@@ -25,13 +32,10 @@
     ],
     "unused-modules": [
       "hyprland/window",
-      "hyprland/language",
-      "keyboard-state",
       "battery#bat2",
       "network",
       "idle_inhibitor",
       "mpd", // Music Player Daemon
-      "power-profiles-daemon",
       "custom/media"
     ],
     // Modules configuration
@@ -44,7 +48,7 @@
         "maximized": "🗖",
         "minimized": "🗕"
       },
-      "expand": false,
+      "expand": true,
       "rewrite": {
         "(.*) — Mozilla Firefox": "<span color='#FF7139'></span>  $1", // em-dash, not regular dash
         "(.*) - (.*) - Visual Studio Code": "Code - $1"
@@ -98,10 +102,9 @@
     },
     "clock": {
       // "timezone": "America/New_York",
-      "format": "{:%a, %d %b %I:%M %p}",
-      "interval": 60,
+      "format": "{:%A, %d %B %Y %H:%M}",
       "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-      "format-alt": "{:%A, %d %B %Y %H:%M:%S}",
+      "format-alt": "{:%A, %d %B %Y %H:%M}",
       "calendar": {
         "format": {
           // "months": "<span color='#ffead3'><b>{}</b></span>",
@@ -133,18 +136,14 @@
       "states": {
         "full": 100,
         "good": 80,
-        "ok": 50,
         "warning": 30,
         "critical": 15
       },
-      "interval": 60, // Polling interval
-      // format-<status> - <status> is /sys/class/power_supply/<bat>/status in lowercase
-      // Values: charging, discharging, full, not charging, unknown
-      "format": "{capacity}%  {icon}",
-      "format-full": "{capacity}%  {icon}",
-      "format-charging": "{capacity}%  ⚡︎",
-      "format-discharging": "{capacity}%  {icon}",
-      "format-not-charging": "{capacity}%  ", // Not charging - powered straight from outlet
+      "format": "{capacity}% {icon}",
+      "format-full": "{capacity}% {icon}",
+      "format-charging": "{capacity}% ⚡",
+      "format-plugged": "{capacity}% ", // Not charging - powered straight fromoutlet
+      // "format-good": "", // An empty format will hide the module
       "format-alt": "{time} {icon}",
       "format-icons": ["", "", "", "", ""]
     },
@@ -206,7 +205,7 @@
       // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
     "custom/spotify": {
-      "format": "{}",
+      "format": "{}  ",
       "tooltip": true,
       "tooltip-format": "{}",
       "max-length": 40,
