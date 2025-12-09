@@ -1,6 +1,7 @@
 (defwindow volume-popup
     :monitor 0
-    :geometry (geometry :x "50%"
+    :geometry (geometry :monitor '["DP-8", "DP-9", "eDP-1"]'
+						:x "50%"
                         :y "90%"
                         :width "120px"
                         :height "40px"
@@ -30,7 +31,7 @@
 	)
 
 )
-(defpoll current-volume :interval ".2s" "amixer sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%' | grep -Eo '[0-9]+' || echo 0")
+(defvar current-volume 0)
 (defvar volume-changed false)
 
 
@@ -65,7 +66,7 @@
 		)
 	)
 )
-(defpoll current-brightness :interval "0.2s" "max=$(brightnessctl max); current=$(brightnessctl get); echo $(( 100 * current / max ))")
+(defvar current-brightness 0)
 (defvar brightness-changed false)
 
 
@@ -84,11 +85,11 @@
 				:orientation "h" 	  
 				:space-evenly "false" 
 				:spacing "2"
-			(image  :path "./assets/blue-moon.png"
-					:image-width 18)
-			; (label  :class "night-icon"
-			; 		:text "🌙" 
-			; 		:class "temperature-text")
+			; (image  :path "./assets/blue-moon.png"
+			; 		:image-width 18)
+			(label  :class "night-icon"
+					:text "T" 
+					:class "temperature-text")
 			(scale	:class "temperature-bar" 	  
 					:value current-temperature
 					:orientation "h"      
@@ -101,5 +102,5 @@
 		)
 	)
 )
-(defpoll current-temperature :interval "0.2s" "hyprctl hyprsunset temperature")
+(defvar current-temperature 0)
 (defvar temperature-changed false)
