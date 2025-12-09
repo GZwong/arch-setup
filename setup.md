@@ -190,6 +190,10 @@ Monitor position is affected by scale!
 The position is calculated with the scaled (and transformed) resolution, meaning if you want your 4K monitor with scale 2 to the left of your 1080p one,
 you’d use the position 1920x0 for the second screen (3840 / 2). If the monitor is also rotated 90 degrees (vertical), you’d use 1080x0.
 
+## Bluetooth
+
+`bluetoothctl` is a command-line interface to connect and pair bluetooth devices.
+
 ## Lid Open/Close Behaviour
 
 The config for this behaviour is stored in `/etc/systemd/logind.cong`.
