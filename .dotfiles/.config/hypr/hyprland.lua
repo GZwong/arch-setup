@@ -55,7 +55,6 @@ hl.on("hyprland.start", function ()
   hl.exec_cmd("uwsm app -- swaync -s '$HOME/.config/swaync/styles.css'")
   hl.exec_cmd("uwsm app -- hyprpaper")
   hl.exec_cmd("uwsm app -- hypridle")
-  hl.exec_cmd("hyprsunset --temp 6000")
 end)
 
 
