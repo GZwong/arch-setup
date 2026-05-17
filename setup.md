@@ -194,6 +194,20 @@ you’d use the position 1920x0 for the second screen (3840 / 2). If the monitor
 
 `bluetoothctl` is a command-line interface to connect and pair bluetooth devices.
 
+For auto-connecting bluetooth devices on startup, the device should be trusted:
+
+```
+bluetoothctl
+
+[bluetoothctl]> devices
+
+[bluetoothctl]> info <XX:XX:XX:XX:XX>
+
+[bluetoothctl]> trust <XX:XX:XX:XX:XX>
+[bluetoothctl]> pair <XX:XX:XX:XX:XX>
+[bluetoothctl]> connect <XX:XX:XX:XX:XX>
+```
+
 ## Lid Open/Close Behaviour
 
 The config for this behaviour is stored in `/etc/systemd/logind.cong`.
@@ -510,7 +524,6 @@ Check hyprland ecosystem: https://wiki.hyprland.org/Hypr-Ecosystem/
 - Hyprpicker - amazing color picker for `wlroots` compositors
 - Eww - create custom widgets. See [official documentation](https://elkowar.github.io/eww/eww.html)
   for installation details, see community examples for implementation details.
-
   - Eww is a rust library so we need to install the toolkit to compile it.
     The command below installs `rustc` (compiler), `rustup` (updater) and
     `cargo` (package manager, analagous to pip on python) in the directory
@@ -542,7 +555,6 @@ Check hyprland ecosystem: https://wiki.hyprland.org/Hypr-Ecosystem/
     ```
 
 - `zsh` and `oh-my-zsh`
-
   - `zsh` is an alternative shell for `bash`.
 
   - To download: `sudo pacman -S zsh zsh-completions`
