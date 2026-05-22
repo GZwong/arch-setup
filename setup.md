@@ -267,11 +267,25 @@ There are several options:
 
 ## Status Bar
 
-Waybar is a status bar for wayland. To run waybar upon hyprland startup, add
-the following line to `~/.config/hypr/hyprland.config`:
+Waybar is a status bar for wayland.
+
+### Startup
+
+There are two ways to run waybar on hyprland autostart:
+
+1. (Recommended) Run it via a systemd service (this is shipped with waybar)
 
 ```bash
-exec once = waybar
+systemctl --user enable waybar.service
+```
+
+2.  Run it via hyprland autostart event
+
+```lua
+hl.on("hyprland.start", function ()
+  hl.exec_cmd("waybar")
+end)
+
 ```
 
 The default waybar has audio, wifi, cpu usage, ram usage etc. The configuration are stored in two per-user files:

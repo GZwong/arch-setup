@@ -51,7 +51,6 @@ local browser     = "firefox"
 -- Or execute your favorite apps at launch like this:
 
 hl.on("hyprland.start", function ()
-  hl.exec_cmd("uwsm app -- waybar")
   hl.exec_cmd("uwsm app -- swaync -s '$HOME/.config/swaync/styles.css'")
   hl.exec_cmd("uwsm app -- hyprpaper")
   hl.exec_cmd("uwsm app -- hypridle")
